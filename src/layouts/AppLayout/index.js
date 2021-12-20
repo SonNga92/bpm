@@ -6,14 +6,22 @@ import {
   Drawer,
   IconButton,
   List,
-  ListItem,
+  ListItem as MuiListItem,
   ListItemIcon,
   ListItemText,
   Toolbar,
   Typography
 } from '@material-ui/core';
-import MenuIcon from '@mui/icons-material/Menu';
-import { makeStyles } from '@material-ui/core/styles';
+import { Menu, Home, Receipt, Assessment, Settings } from '@material-ui/icons';
+import { makeStyles, withStyles } from '@material-ui/core/styles';
+
+const ListItem = withStyles({
+  root: {
+    '& .MuiListItem-button:hover': {
+      backgroundColor: '#337066'
+    }
+  }
+})(MuiListItem);
 
 const AppLayout = ({ children }) => {
   const drawerWidth = 220;
@@ -45,7 +53,8 @@ const AppLayout = ({ children }) => {
         flexShrink: 0
       },
       drawerPaper: {
-        width: drawerWidth
+        width: drawerWidth,
+        backgroundColor: '#004d40'
       },
       drawerHeader: {
         display: 'flex',
@@ -70,6 +79,9 @@ const AppLayout = ({ children }) => {
           duration: theme.transitions.duration.enteringScreen
         }),
         marginLeft: 0
+      },
+      listItemText: {
+        color: '#fff'
       }
     }))
   );
@@ -81,6 +93,8 @@ const AppLayout = ({ children }) => {
       <CssBaseline />
       <AppBar
         position="fixed"
+        color="secondary"
+        elevation={0}
         className={clsx(classes.appBar, {
           [classes.appBarShift]: open
         })}
@@ -92,7 +106,7 @@ const AppLayout = ({ children }) => {
             onClick={() => setOpen(!open)}
             className={classes.menuButton}
           >
-            <MenuIcon />
+            <Menu />
           </IconButton>
         </Toolbar>
       </AppBar>
@@ -108,14 +122,36 @@ const AppLayout = ({ children }) => {
         <div className={classes.drawerHeader} />
 
         <List>
-          {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-            <ListItem button key={text}>
-              <ListItemIcon>
-                <MenuIcon />
-              </ListItemIcon>
-              <ListItemText primary={text} />
-            </ListItem>
-          ))}
+          <ListItem className={classes.listItem} button key="trangchu">
+            <ListItemIcon className={classes.listItemText}>
+              <Home />
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItemText}
+              primary="Trang chủ"
+            />
+          </ListItem>
+          <ListItem className={classes.listItem} button key="giaodich">
+            <ListItemIcon className={classes.listItemText}>
+              <Receipt />
+            </ListItemIcon>
+            <ListItemText
+              className={classes.listItemText}
+              primary="Giao dịch"
+            />
+          </ListItem>
+          <ListItem className={classes.listItem} button key="baocao">
+            <ListItemIcon className={classes.listItemText}>
+              <Assessment />
+            </ListItemIcon>
+            <ListItemText className={classes.listItemText} primary="Báo cáo" />
+          </ListItem>
+          <ListItem className={classes.listItem} button key="caidat">
+            <ListItemIcon className={classes.listItemText}>
+              <Settings />
+            </ListItemIcon>
+            <ListItemText className={classes.listItemText} primary="Cài đặt" />
+          </ListItem>
         </List>
       </Drawer>
       <div

@@ -1,17 +1,21 @@
-import { createTheme } from '@material-ui/core/styles';
+import { createTheme } from '@material-ui/core';
 import teal from '@material-ui/core/colors/teal';
+import red from '@material-ui/core/colors/red';
 import { createGlobalStyle } from 'styled-components';
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: teal[700]
+      // light: '#ff7961',
+      main: '#004d40'
+      // dark: '#ba000d'
     },
+
     secondary: {
-      light: '#ff7961',
-      main: '#f44336',
-      dark: '#ba000d',
-      contrastText: '#000'
+      // light: '#ff7961',
+      main: '#e5e5e5'
+      // dark: '#ba000d',
+      // contrastText: '#000'
     }
   }
 });
@@ -21,4 +25,4 @@ const GlobalStyles = createGlobalStyle`
     body,
 `;
 
-export default { GlobalStyles, theme };
+export { GlobalStyles, theme };
