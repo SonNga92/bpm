@@ -116,7 +116,7 @@ const Homepage = () => {
   }, [tableData]);
 
   useEffect(() => {
-    // getTableData();
+    getTableData();
   }, []);
 
   const handleOpen = () => setOpen(true);
