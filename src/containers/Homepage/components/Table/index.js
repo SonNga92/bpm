@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import MaterialTable, { MTableToolbar } from 'material-table';
-import tableIcons from '../../../../components/TableIcon';
-import { Button } from '@material-ui/core';
+import { tableIcons } from '../../../../../public/tableIcon';
+import { Button, Grid } from '@material-ui/core';
 
 const Table = (props) => {
   const { tableData, handleEdit, onDelete, getTableData, handleAdd } = props;
@@ -77,8 +77,13 @@ const Table = (props) => {
           Toolbar: (props) => (
             <div>
               <MTableToolbar {...props} />
-              <div style={{ padding: '0px 10px' }}>
-                <Button onClick={handleAdd} variant="contained" color="primary">
+              <div style={{ padding: '10px 10px' }}>
+                <Button
+                  onClick={handleAdd}
+                  variant="contained"
+                  color="primary"
+                  size="small"
+                >
                   Add user
                 </Button>
               </div>

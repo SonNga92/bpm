@@ -35,7 +35,7 @@ const SearchForm = (props) => {
   };
 
   return (
-    <Paper elevation={3}>
+    <Paper elevation={2}>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={3}>
