@@ -1,9 +1,14 @@
 import { createTheme } from '@material-ui/core';
-import teal from '@material-ui/core/colors/teal';
-import red from '@material-ui/core/colors/red';
 import { createGlobalStyle } from 'styled-components';
 
 const theme = createTheme({
+  overrides: {
+    MuiSvgIcon: {
+      root: {
+        height: 'auto'
+      }
+    }
+  },
   palette: {
     primary: {
       // light: '#ff7961',
