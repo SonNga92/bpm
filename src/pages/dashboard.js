@@ -1,10 +1,10 @@
-import Homepage from '../containers/Homepage';
+import Dashboard from '../containers/Dashboard';
 import AppLayout from '../layouts/AppLayout';
 
 export default function Home() {
   return (
     <AppLayout>
-      <Homepage />
+      <Dashboard />
     </AppLayout>
   );
 }

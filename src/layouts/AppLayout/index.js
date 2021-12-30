@@ -64,6 +64,14 @@ const AppLayout = ({ children }) => {
       },
       listItemText: {
         color: '#fff'
+      },
+      nestedListItem: {
+        paddingLeft: '30px',
+        backgroundColor: 'rgb(255 255 255 / 8%)'
+      },
+      childListItem: {
+        paddingLeft: '30px',
+        backgroundColor: 'rgb(255 255 255 / 15%)'
       }
     }))
   );

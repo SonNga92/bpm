@@ -4,16 +4,17 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import InputField from '../../../../components/InputField';
 import { Button, Grid, Paper } from '@material-ui/core';
-import { Wrapper } from '../../../../styles/Styles';
+import { Wrapper } from '../../styles';
+import InputAutocomplete from '../../../../components/InputAutocomplete';
+import { cloneDeep } from 'lodash';
 
 const SearchForm = (props) => {
-  const { handleAdd } = props;
+  const { statusSelect } = props;
 
   const defaultValues = {
-    firstName: '',
-    lastName: '',
-    phone: '',
-    age: ''
+    bank_id: '',
+    bankName: '',
+    shortName: ''
   };
 
   const { control, handleSubmit, reset } = useForm({
@@ -22,13 +23,15 @@ const SearchForm = (props) => {
     defaultValues: defaultValues,
     resolver: yupResolver(
       Yup.object({
-        firstName: Yup.string().required('Trường bắt buộc'),
-        lastName: Yup.string().required('Trường bắt buộc'),
-        phone: Yup.string().required('Trường bắt buộc'),
-        age: Yup.number('Sai định dạng').required('Trường bắt buộc')
+        bankName: Yup.string().required('Trường bắt buộc'),
+        shortName: Yup.string().required('Trường bắt buộc')
       })
     )
   });
+
+  const onReset = () => {
+    reset(cloneDeep(defaultValues));
+  };
 
   const onSubmit = (value) => {
     console.log(value);
@@ -38,29 +41,35 @@ const SearchForm = (props) => {
     <Paper elevation={2}>
       <Wrapper>
         <form onSubmit={handleSubmit(onSubmit)}>
-          <Grid container spacing={3}>
-            <Grid item xs={3}>
+          <Grid container spacing={2}>
+            <Grid item xs={4}>
+              <InputField control={control} name="bank_id" label="Mã bank" />
+            </Grid>
+            <Grid item xs={4}>
               <InputField
                 control={control}
-                name="firstName"
-                label="Fist name"
+                name="bankName"
+                label="Tên ngân hàng"
               />
             </Grid>
-            <Grid item xs={3}>
-              <InputField control={control} name="lastName" label="Last name" />
-            </Grid>
-            <Grid item xs={3}>
-              <InputField control={control} name="phone" label="Phone" />
-            </Grid>
-            <Grid item xs={3}>
-              <InputField control={control} name="age" label="Age" />
+            <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="shortName"
+                label="Mã ngân hàng"
+              />
             </Grid>
           </Grid>
           <div style={{ padding: '10px' }}></div>
-          <Grid container justifyContent="flex-end" spacing={1}>
+          <Grid container justifyContent="flex-end" spacing={2}>
             <Grid item xs={2}>
-              <Button size="small" variant="outlined" fullWidth>
-                Close
+              <Button
+                onClick={onReset}
+                size="small"
+                variant="outlined"
+                fullWidth
+              >
+                Làm mới
               </Button>
             </Grid>
             <Grid item xs={2}>
@@ -68,10 +77,10 @@ const SearchForm = (props) => {
                 size="small"
                 variant="contained"
                 type="submit"
-                color="secondary"
+                color="primary"
                 fullWidth
               >
-                Submit
+                Tìm kiếm
               </Button>
             </Grid>
           </Grid>

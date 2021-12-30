@@ -1,21 +1,24 @@
-import { TextField } from '@material-ui/core';
-import React from 'react';
+import { TextField, withStyles } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 
 const InputField = (props) => {
-  const { control, name, label } = props;
+  const { control, name, label, disabled, ...restProps } = props;
   return (
     <>
       <Controller
         name={name}
         control={control}
-        render={({ field }) => (
+        {...restProps}
+        render={({ field, fieldState: { error } }) => (
           <TextField
             {...field}
+            disabled={!!disabled}
             id="outlined-basic"
             label={label}
             variant="outlined"
             size="small"
+            error={!!error}
+            helperText={error && error.message}
             fullWidth
           />
         )}

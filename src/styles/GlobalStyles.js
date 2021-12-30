@@ -7,6 +7,12 @@ const theme = createTheme({
       root: {
         height: 'auto'
       }
+    },
+    MuiOutlinedInput: {
+      root: {
+        position: 'relative',
+        borderRadius: '8px'
+      }
     }
   },
   palette: {
