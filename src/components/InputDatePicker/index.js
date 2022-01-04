@@ -1,34 +1,35 @@
-import { TextField, withStyles } from '@material-ui/core';
+import React from 'react';
+import { KeyboardDatePicker } from '@material-ui/pickers';
 import { Controller } from 'react-hook-form';
 
-const InputField = (props) => {
+const InputDatePicker = (props) => {
   const { control, name, label, disabled, ...restProps } = props;
   return (
     <Controller
       name={name}
       control={control}
-      {...restProps}
       render={({
         field: { onBlur, onChange, ref, value },
         fieldState: { error }
       }) => (
-        <TextField
+        <KeyboardDatePicker
           onBlur={onBlur}
-          onChange={(e) => onChange(e.target.value)}
+          onChange={(date) => onChange(date)}
           inputRef={ref}
           value={value}
-          disabled={!!disabled}
-          id="outlined-basic"
+          inputVariant="outlined"
+          fullWidth
           label={label}
-          variant="outlined"
           size="small"
           error={!!error}
           helperText={error && error.message}
-          fullWidth
+          format="dd/MM/yyyy"
+          disableFuture={true}
+          disabled={disabled}
         />
       )}
     />
   );
 };
 
-export default InputField;
+export default InputDatePicker;

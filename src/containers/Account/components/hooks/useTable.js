@@ -4,37 +4,58 @@ import accountApi from '../../../../api/accountApi';
 
 const useTable = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
-  const [tableData, setTableData] = useState([]);
+  const [tableData, setTableData] = useState({
+    pageIndex: 1,
+    pageSize: 10,
+    totalCount: 0,
+    data: []
+  });
 
-  const fetchData = async (params) => {
+  const fetchData = useCallback(async (params) => {
     try {
       const response = await accountApi.getAll(params);
-      console.log(response.data);
-      response.data && setTableData(response.data);
+      if (response) {
+        const { data } = response;
+        setTableData({ data: data });
+      }
     } catch (error) {
       enqueueSnackbar(`Failed to fetch table ${error}`, {
         variant: 'warning'
       });
     }
-  };
+  });
 
   const getTableData = (params) => {
-    fetchData(params);
+    fetchData({ pageindex: 1, pagesize: 10 });
   };
 
-  const onSearch = (searchValues) => {
-    accountApi.search({ pageindex: 1, pagesize: 10, searchValues });
+  const onSearch = (params) => {
+    accountApi.search(params);
   };
 
-  const onPageChange = (page) => {
-    fetchData({ page });
-  };
-
-  const onPageSizeChange = (pageSize) => {
-    if (searchValues) {
-      fetchData({ pageSize });
+  const onPageChange = useCallback((params) => {
+    try {
+      if (params) {
+        fetchData(params);
+      }
+    } catch (error) {
+      enqueueSnackbar(`Failed to fetch table ${error}`, {
+        variant: 'warning'
+      });
     }
-  };
+  });
+
+  const onPageSizeChange = useCallback((params) => {
+    try {
+      if (params) {
+        fetchData(params);
+      }
+    } catch (error) {
+      enqueueSnackbar(`Failed to fetch table ${error}`, {
+        variant: 'warning'
+      });
+    }
+  });
 
   const onDelete = async (values) => {
     try {

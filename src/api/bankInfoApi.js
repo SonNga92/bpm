@@ -8,7 +8,15 @@ const bankInfoApi = {
   },
 
   search: (params) => {
-    const url = `pub/v1/bank-info/search`;
+    var payload = '';
+    for (var key in params) {
+      if (payload != '') {
+        payload += '&';
+      }
+      payload += key + '=' + params[key];
+    }
+    // const payload = encodeURI(params);
+    const url = `pub/v1/bank-info/search?${payload}`;
     return axiosClient.get(url, params);
   },
 

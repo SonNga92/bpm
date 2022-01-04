@@ -1,5 +1,5 @@
 import React from 'react';
-import Autocomplete from '@material-ui/lab/autocomplete';
+import Autocomplete from '@material-ui/lab/Autocomplete';
 import { TextField } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 

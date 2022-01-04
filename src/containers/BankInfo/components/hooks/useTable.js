@@ -8,48 +8,71 @@ const useTable = () => {
     pageIndex: 1,
     pageSize: 10,
     totalCount: 0,
-    data: []
+    loading: false,
+    data: [],
+    searchValues: null
   });
 
-  const fetchData = useCallback(async (params) => {
+  const updateTableData = useCallback(
+    (curr) =>
+      setTableData((prev) => {
+        return { ...prev, ...curr };
+      }),
+    []
+  );
+
+  const getTableData = useCallback(async (params, searchValues) => {
     try {
-      const response = await bankInfoApi.getAll(params);
+      updateTableData({
+        loading: true,
+        data: []
+      });
+      let response = {};
+      searchValues
+        ? (response = await bankInfoApi.search({ ...params, ...searchValues }))
+        : (response = await bankInfoApi.getAll(params));
       const { data } = response;
-      data && setTableData(data);
+      let rows = [];
+      if (data) {
+        rows = data.data.map((record, index) => {
+          return {
+            ...record,
+            rowId: index + 1
+          };
+        });
+        updateTableData({
+          data: rows,
+          pageSize: data.pageSize,
+          pageIndex: data.pageIndex,
+          totalCount: data.totalCount,
+          loading: false,
+          searchValues: searchValues
+        });
+      } else if (data == null) {
+        enqueueSnackbar(`Không có dữ liệu`, {
+          variant: 'warning'
+        });
+      }
     } catch (error) {
       enqueueSnackbar(`Failed to fetch table ${error}`, {
         variant: 'warning'
       });
     }
+
+    updateTableData({
+      loading: false
+    });
   });
 
-  const getTableData = (params) => {
-    fetchData({ pageindex: 1, pagesize: 10 });
-  };
-
-  const onSearch = (params) => {
-    bankInfoApi.search(params);
-  };
-
-  const onPageChange = useCallback((params) => {
+  const onSearch = (params, searchValues) => {
     try {
-      if (params) {
-        fetchData(params);
+      if (params || searchValues) {
+        getTableData(params, searchValues);
       }
     } catch (error) {
       console.log('Failed to add user onPageChange', error);
     }
-  });
-
-  const onPageSizeChange = useCallback((params) => {
-    try {
-      if (params) {
-        fetchData(params);
-      }
-    } catch (error) {
-      console.log('Failed to add user onPageSizeChange', error);
-    }
-  });
+  };
 
   const onDelete = async (params) => {
     try {
@@ -88,8 +111,6 @@ const useTable = () => {
     tableData,
     getTableData,
     onSearch,
-    onPageChange,
-    onPageSizeChange,
     onDelete,
     onAdd,
     onEdit

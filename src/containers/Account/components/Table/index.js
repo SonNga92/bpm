@@ -11,6 +11,7 @@ const Table = (props) => {
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const { pageIndex, pageSize, totalCount, data } = tableData;
 
+  console.log('data', data);
   // data.map((data) => {
   //   if (Number(data.synStatus) === 1) {
   //     data.synStatus = {
@@ -156,7 +157,6 @@ const Table = (props) => {
         icons={tableIcons}
         columns={columns}
         actions={actions}
-        style={{ overflow: 'scroll' }}
         options={{
           filtering: true,
           actionsColumnIndex: -1,

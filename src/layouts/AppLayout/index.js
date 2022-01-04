@@ -27,7 +27,7 @@ const AppLayout = ({ children }) => {
           duration: theme.transitions.duration.enteringScreen
         })
       },
-      menuButton: {
+      menuIcon: {
         marginRight: theme.spacing(3)
       },
       drawer: {

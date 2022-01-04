@@ -11,6 +11,8 @@ import Head from 'next/head';
 import './styles/globals.css';
 import React, { useEffect } from 'react';
 import { Cancel } from '@material-ui/icons';
+import { MuiPickersUtilsProvider } from '@material-ui/pickers';
+import DateFnsUtils from '@date-io/date-fns';
 
 function MyApp(props) {
   const { Component, pageProps } = props;
@@ -38,20 +40,22 @@ function MyApp(props) {
       </Head>
       <MuiThemeProvider theme={theme}>
         <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <GlobalStyles />
-          <SnackbarProvider
-            ref={notistackRef}
-            anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
-            preventDuplicate
-            action={(key) => (
-              <IconButton onClick={onClickDismiss(key)}>
-                <Cancel style={{ color: '#fff' }} />
-              </IconButton>
-            )}
-          >
-            <Component {...pageProps} />
-          </SnackbarProvider>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            <CssBaseline />
+            <GlobalStyles />
+            <SnackbarProvider
+              ref={notistackRef}
+              anchorOrigin={{ horizontal: 'right', vertical: 'top' }}
+              preventDuplicate
+              action={(key) => (
+                <IconButton onClick={onClickDismiss(key)}>
+                  <Cancel style={{ color: '#fff' }} />
+                </IconButton>
+              )}
+            >
+              <Component {...pageProps} />
+            </SnackbarProvider>
+          </MuiPickersUtilsProvider>
         </ThemeProvider>
       </MuiThemeProvider>
     </>

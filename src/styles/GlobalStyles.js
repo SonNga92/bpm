@@ -13,6 +13,33 @@ const theme = createTheme({
         position: 'relative',
         borderRadius: '8px'
       }
+    },
+    MuiDialogContent: {
+      root: {
+        overflowY: 'unset'
+      }
+    },
+    MuiDialogActions: {
+      root: {
+        padding: '16px 24px'
+      }
+    },
+    MuiButton: {
+      root: {
+        borderRadius: '8px'
+      }
+    },
+    MuiInputBase: {
+      root: {
+        Mui: {
+          disabled: {
+            color: 'rgba(0, 0, 0, 0.87)'
+          }
+        }
+      },
+      input: {
+        color: 'rgba(0, 0, 0, 0.87)'
+      }
     }
   },
   palette: {

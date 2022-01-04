@@ -10,26 +10,13 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Grid
 } from '@material-ui/core';
 import InputField from '../../components/InputField';
 import { GlobalWrapper } from '../../styles/styles';
 import useTable from './components/hooks/useTable';
-
-const statusSelect = [
-  {
-    value: 1,
-    label: 'Hoạt động'
-  },
-  {
-    value: 2,
-    label: 'Bị khoá'
-  },
-  {
-    value: 3,
-    label: 'Huỷ'
-  }
-];
+import { Wrapper } from './styles';
 
 const BankInfo = () => {
   const [open, setOpen] = useState(false);
@@ -51,18 +38,39 @@ const BankInfo = () => {
   const defaultValues = {
     bank_id: '',
     bankName: '',
-    shortName: ''
+    shortName: '',
+    vpbBankId: '',
+    citadBankId: '',
+    cityName: '',
+    cityShortname: '',
+    bankFullname: '',
+    bankShortname: ''
   };
 
-  const { control, handleSubmit, reset, setValue, errors } = useForm({
-    mode: 'onSubmit',
+  const { control, handleSubmit, reset, setValue } = useForm({
+    mode: 'onTouched',
     reValidateMode: 'onBlur',
     defaultValues: defaultValues,
     resolver: yupResolver(
       Yup.object({
-        bank_id: Yup.string(),
-        bankName: Yup.string(),
-        shortName: Yup.string()
+        bank_id: Yup.string()
+          .trim()
+          .matches(/^[0-9]*$/, 'Sai định dạng')
+          .required('Trường bắt buộc'),
+        bankName: Yup.string().trim().required('Trường bắt buộc'),
+        shortName: Yup.string().required('Trường bắt buộc'),
+        vpbBankId: Yup.string()
+          .trim()
+          .matches(/^[0-9]*$/, 'Sai định dạng')
+          .required('Trường bắt buộc'),
+        citadBankId: Yup.string()
+          .trim()
+          .matches(/^[0-9]*$/, 'Sai định dạng')
+          .required('Trường bắt buộc'),
+        cityName: Yup.string().trim().required('Trường bắt buộc'),
+        cityShortname: Yup.string().trim().required('Trường bắt buộc'),
+        bankFullname: Yup.string().trim().required('Trường bắt buộc'),
+        bankShortname: Yup.string().trim().required('Trường bắt buộc')
       })
     )
   });
@@ -86,6 +94,12 @@ const BankInfo = () => {
       setValue('bank_id', values.bank_id);
       setValue('bankName', values.bankName);
       setValue('shortName', values.shortName);
+      setValue('vpbBankId', values.vpbBankId);
+      setValue('citadBankId', values.citadBankId);
+      setValue('cityName', values.cityName);
+      setValue('cityShortname', values.cityShortname);
+      setValue('bankFullname', values.bankFullname);
+      setValue('bankShortname', values.bankShortname);
       setEditId(values.id);
       handleOpen();
       setFormType('edit');
@@ -103,12 +117,14 @@ const BankInfo = () => {
     reset(defaultValues);
   };
 
-  const onSubmit = (values, e) => {
+  const onSubmit = (values) => {
     if (formType === 'add') {
-      onAdd(values);
+      // onAdd(values);
+      console.log('add', values);
     }
     if (formType === 'edit') {
-      onEdit(values);
+      // onEdit(values);
+      console.log('edit', values);
     }
     handleClose();
     reset(defaultValues);
@@ -116,9 +132,13 @@ const BankInfo = () => {
 
   return (
     <GlobalWrapper>
-      <SearchForm statusSelect={statusSelect} />
+      <SearchForm
+        getTableData={getTableData}
+        onSearch={onSearch}
+        tableData={tableData}
+      />
 
-      <div style={{ padding: '10px' }}></div>
+      <div style={{ padding: '10px' }} />
 
       <Table
         tableData={tableData}
@@ -133,13 +153,19 @@ const BankInfo = () => {
 
       <Dialog open={open} onClose={onCloseForm} maxWidth="md" fullWidth>
         <form onSubmit={handleSubmit(onSubmit)}>
-          {formType === 'add' ? (
-            <DialogTitle>Thêm tài khoản</DialogTitle>
-          ) : (
-            <DialogTitle>Cập nhật tài khoản của khách hàng</DialogTitle>
+          {formType === 'add' && <DialogTitle>Thêm ngân hàng</DialogTitle>}
+          {formType === 'edit' && (
+            <DialogTitle>Cập nhật thông tin ngân hàng</DialogTitle>
           )}
+          {formType === 'view' && (
+            <DialogTitle>Thông tin ngân hàng</DialogTitle>
+          )}
+
+          <Divider variant="middle" />
+          <div style={{ padding: '10px' }} />
+
           <DialogContent>
-            <Grid container spacing={3}>
+            <Grid container spacing={2}>
               <Grid item xs={4}>
                 <InputField
                   control={control}
@@ -164,15 +190,79 @@ const BankInfo = () => {
                   disabled={disabledInput}
                 />
               </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="vpbBankId"
+                  label="Mã vpb Bank"
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="citadBankId"
+                  label="citadBankId"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="cityName"
+                  label="Tên thành phố"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="cityShortname"
+                  label="Mã thành phố"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="bankFullname"
+                  label="Tên ngân hàng đầy đủ"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="bankShortname"
+                  label="Mã ngân hàng"
+                  disabled={disabledInput}
+                />
+              </Grid>
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onCloseForm} variant="outlined">
-              Close
-            </Button>
-            <Button variant="contained" type="submit" color="primary">
-              Submit
-            </Button>
+            <Grid container justifyContent="flex-end" spacing={2}>
+              <Grid item xs={2}>
+                <Button
+                  onClick={onCloseForm}
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                >
+                  Close
+                </Button>
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  fullWidth
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
           </DialogActions>
         </form>
       </Dialog>

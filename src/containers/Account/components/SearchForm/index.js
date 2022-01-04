@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import InputField from '../../../../components/InputField';
-import { Button, Grid, Paper } from '@material-ui/core';
+import { Button, Grid, Input, Paper } from '@material-ui/core';
 import { Wrapper } from '../../styles';
 import InputAutocomplete from '../../../../components/InputAutocomplete';
 import { cloneDeep } from 'lodash';

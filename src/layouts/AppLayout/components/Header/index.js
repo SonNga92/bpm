@@ -20,7 +20,7 @@ const Header = (props) => {
             color="inherit"
             edge="start"
             onClick={() => handleOpen()}
-            className={classes.menuButton}
+            className={classes.menuIcon}
           >
             <Menu />
           </IconButton>

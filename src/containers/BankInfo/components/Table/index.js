@@ -1,26 +1,27 @@
-import React, { useMemo, useState, useCallback } from 'react';
+import React, { useMemo, useState, useCallback, useEffect } from 'react';
 import MaterialTable, { MTableToolbar } from '@material-table/core';
 import { tableIcons } from '../../../../../public/tableIcon';
-import { Button, Grid } from '@material-ui/core';
+import { Button, Divider, Grid } from '@material-ui/core';
 import TablePagination from '@material-ui/core/TablePagination';
 
 const Table = (props) => {
-  const {
-    tableData,
-    handleEdit,
-    onDelete,
-    getTableData,
-    handleAdd,
-    onPageChange,
-    onPageSizeChange
-  } = props;
+  const { tableData, handleEdit, onDelete, getTableData, handleAdd } = props;
 
-  const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(10);
-  const [isLoading, setIsLoading] = useState(false);
-  const { pageIndex, pageSize, totalCount, data } = tableData;
+  const { pageIndex, pageSize, totalCount, data, loading, searchValues } =
+    tableData;
+
+  useEffect(() => {}, [tableData]);
 
   const columns = useMemo(() => [
+    {
+      field: 'rowId',
+      title: 'STT',
+      cellStyle: {
+        width: '80px',
+        minWidth: '80px'
+      }
+    },
     {
       field: 'bank_id',
       title: 'Mã bank',
@@ -80,7 +81,7 @@ const Table = (props) => {
     }
   ]);
 
-  const actions = [
+  const actions = useMemo(() => [
     {
       icon: tableIcons.Refresh,
       tooltip: 'Refresh Data',
@@ -103,22 +104,21 @@ const Table = (props) => {
         tooltip: 'Delete User',
         onClick: (event, rowData) => onDelete(rowData)
       }
-  ];
+  ]);
+
   const options = {
     filtering: true,
     actionsColumnIndex: -1,
     draggable: false,
     paging: true,
-    pageSize: pageSize,
-    emptyRowsWhenPaging: false,
-    doubleHorizontalScroll: true
+    pageSize: 200,
+    emptyRowsWhenPaging: false
+    // doubleHorizontalScroll: true
   };
-  console.log(options.pageSize);
 
   const handlePageChange = useCallback((event, newPage) => {
-    const params = { pageindex: newPage + 1, pagesize: rowsPerPage };
-    setPage(newPage);
-    onPageChange(params);
+    const params = { pageindex: pageIndex + 1, pagesize: pageSize };
+    getTableData(params, searchValues);
   });
 
   const handleRowsPerPageChange = useCallback((event) => {
@@ -127,16 +127,14 @@ const Table = (props) => {
       pageindex: 1,
       pagesize: parseInt(event.target.value)
     };
-    onPageSizeChange(params);
-    setPage(0);
+    getTableData(params, searchValues);
   });
 
   return (
     <div style={{ maxWidth: '100%' }}>
       <MaterialTable
         title="Danh mục ngân hàng"
-        key={1000}
-        isLoading={isLoading}
+        isLoading={loading}
         data={data}
         icons={tableIcons}
         columns={columns}
@@ -145,10 +143,11 @@ const Table = (props) => {
         components={{
           Pagination: (props) => (
             <TablePagination
+              {...props}
               rowsPerPageOptions={[10, 25, 50, 100, 200]}
-              component="div"
+              component="td"
               count={totalCount ? totalCount : 0}
-              page={page}
+              page={pageIndex - 1}
               labelRowsPerPage="Số hàng trên trang"
               rowsPerPage={pageSize}
               onPageChange={handlePageChange}
@@ -158,6 +157,9 @@ const Table = (props) => {
           Toolbar: (props) => (
             <div>
               <MTableToolbar {...props} />
+              <div style={{ padding: '5px' }} />
+              <Divider variant="middle" />
+              <div style={{ padding: '10px' }} />
               {handleAdd && (
                 <div style={{ padding: '10px 10px' }}>
                   <Button

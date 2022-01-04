@@ -20,27 +20,27 @@ import Visibility from '@material-ui/icons/Visibility';
 
 
 export const tableIcons = {
-  Add: forwardRef((props, ref) => <AddBox {...props} ref={ref} />),
-  Check: forwardRef((props, ref) => <Check {...props} ref={ref} />),
-  Clear: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Delete: forwardRef((props, ref) => <DeleteOutline {...props} ref={ref} />),
+  Add: forwardRef((props, ref) => <AddBox {...props} innerRef={ref} />),
+  Check: forwardRef((props, ref) => <Check {...props} innerRef={ref} />),
+  Clear: forwardRef((props, ref) => <Clear {...props} innerRef={ref} />),
+  Delete: forwardRef((props, ref) => <DeleteOutline {...props} innerRef={ref} />),
   DetailPanel: forwardRef((props, ref) => (
-    <ChevronRight {...props} ref={ref} />
+    <ChevronRight {...props} innerRef={ref} />
   )),
-  Edit: forwardRef((props, ref) => <Edit {...props} ref={ref} />),
-  Export: forwardRef((props, ref) => <SaveAlt {...props} ref={ref} />),
-  Filter: forwardRef((props, ref) => <FilterList {...props} ref={ref} />),
-  FirstPage: forwardRef((props, ref) => <FirstPage {...props} ref={ref} />),
-  LastPage: forwardRef((props, ref) => <LastPage {...props} ref={ref} />),
-  NextPage: forwardRef((props, ref) => <ChevronRight {...props} ref={ref} />),
+  Edit: forwardRef((props, ref) => <Edit {...props} innerRef={ref} />),
+  Export: forwardRef((props, ref) => <SaveAlt {...props} innerRef={ref} />),
+  Filter: forwardRef((props, ref) => <FilterList {...props} innerRef={ref} />),
+  FirstPage: forwardRef((props, ref) => <FirstPage {...props} innerRef={ref} />),
+  LastPage: forwardRef((props, ref) => <LastPage {...props} innerRef={ref} />),
+  NextPage: forwardRef((props, ref) => <ChevronRight {...props} innerRef={ref} />),
   PreviousPage: forwardRef((props, ref) => (
     <ChevronLeft {...props} ref={ref} />
   )),
-  ResetSearch: forwardRef((props, ref) => <Clear {...props} ref={ref} />),
-  Search: forwardRef((props, ref) => <Search {...props} ref={ref} />),
-  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} ref={ref} />),
-  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} ref={ref} />),
-  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} ref={ref} />),
-  Refresh: forwardRef((props, ref) => <Refresh {...props} ref={ref} />),
-  Preview: forwardRef((props, ref) => <Visibility {...props} ref={ref} />),
+  ResetSearch: forwardRef((props, ref) => <Clear {...props} innerRef={ref} />),
+  Search: forwardRef((props, ref) => <Search {...props} innerRef={ref} />),
+  SortArrow: forwardRef((props, ref) => <ArrowDownward {...props} innerRef={ref} />),
+  ThirdStateCheck: forwardRef((props, ref) => <Remove {...props} innerRef={ref} />),
+  ViewColumn: forwardRef((props, ref) => <ViewColumn {...props} innerRef={ref} />),
+  Refresh: forwardRef((props, ref) => <Refresh {...props} innerRef={ref} />),
+  Preview: forwardRef((props, ref) => <Visibility {...props} innerRef={ref} />),
 };
