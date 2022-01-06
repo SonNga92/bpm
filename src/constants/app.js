@@ -3,7 +3,8 @@ import {
   Receipt,
   Assessment,
   Settings,
-  Dashboard
+  Dashboard,
+  Assignment
 } from '@material-ui/icons';
 
 export const MENU_ITEMS = [
@@ -86,5 +87,12 @@ export const MENU_ITEMS = [
         path: '/'
       }
     ]
+  },
+  {
+    id: 10,
+    displayText: 'Task List',
+    path: '/task-list',
+    hasNestedMenu: false,
+    icon: Assignment
   }
 ];

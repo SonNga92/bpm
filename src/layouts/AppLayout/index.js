@@ -14,6 +14,7 @@ const AppLayout = ({ children }) => {
       },
       appBar: {
         marginLeft: drawerWidth,
+        zIndex: theme.zIndex.drawer + 1,
         transition: theme.transitions.create(['margin', 'width'], {
           easing: theme.transitions.easing.sharp,
           duration: theme.transitions.duration.leavingScreen
@@ -36,7 +37,8 @@ const AppLayout = ({ children }) => {
       },
       drawerPaper: {
         width: drawerWidth,
-        backgroundColor: '#004d40'
+        backgroundColor: '#004d40',
+        zIndex: theme.zIndex.drawer
       },
       drawerHeader: {
         display: 'flex',
@@ -94,7 +96,7 @@ const AppLayout = ({ children }) => {
       >
         <div className={classes.drawerHeader} />
 
-        <div>{children}</div>
+        <div open={open}>{children}</div>
       </div>
     </div>
   );
