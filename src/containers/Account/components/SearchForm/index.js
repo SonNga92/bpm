@@ -3,20 +3,20 @@ import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as Yup from 'yup';
 import InputField from '../../../../components/InputField';
-import { Button, Grid, Input, Paper } from '@material-ui/core';
+import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { Wrapper } from '../../styles';
 import InputAutocomplete from '../../../../components/InputAutocomplete';
-import { cloneDeep } from 'lodash';
+import { format, isDate } from 'date-fns';
 
 const SearchForm = (props) => {
-  const { statusSelect, onSearch } = props;
-
+  const { getTableData, onSearch, statusSelect, tableData } = props;
+  const { pageIndex, pageSize, totalCount, data, loading, searchValues } =
+    tableData;
   const defaultValues = {
     fullname: '',
     acctNo: '',
-    balance: '',
-    holdBalance: '',
-    availableBalance: '',
+    idcode: '',
+    custid: '',
     synStatus: null
   };
 
@@ -27,22 +27,38 @@ const SearchForm = (props) => {
     resolver: yupResolver(
       Yup.object({
         fullname: Yup.string(),
-        acctNo: Yup.string(),
-        balance: Yup.string(),
-        holdBalance: Yup.string(),
-        availableBalance: Yup.string(),
+        acctNo: Yup.string().trim(),
+        idcode: Yup.string().trim(),
+        custid: Yup.string().trim(),
         synStatus: Yup.object().nullable()
       })
     )
   });
 
   const onReset = () => {
-    reset(cloneDeep(defaultValues));
+    reset(defaultValues);
+    getTableData();
   };
 
-  const onSubmit = (value) => {
-    value && onSearch(value);
-    // console.log(value);
+  const clean = (obj) => {
+    for (var prop in obj) {
+      if (obj[prop] === null || obj[prop] === undefined || obj[prop] === '') {
+        delete obj[prop];
+      } else if (isDate(obj[prop])) {
+        obj[prop] = format(obj[prop], 'dd-MM-yyyy');
+      } else obj[prop] = `like:${obj[prop]}`;
+    }
+    return obj;
+  };
+
+  const onSubmit = (values) => {
+    const searchValues = clean(values);
+    if (searchValues.dateFrom && searchValues.dateTo) {
+      searchValues.createdAt = `between:${searchValues.dateFrom},${searchValues.dateTo}`;
+      delete searchValues.dateFrom;
+      delete searchValues.dateTo;
+    }
+    onSearch({ pageindex: pageIndex, pagesize: pageSize }, searchValues);
   };
 
   return (
@@ -65,34 +81,19 @@ const SearchForm = (props) => {
               />
             </Grid>
             <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="balance"
-                label="Tổng tài khoản"
-              />
+              <InputField control={control} name="idcode" label="Id Code" />
             </Grid>
             <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="holdBalance"
-                label="Tổng tiền hold"
-              />
+              <InputField control={control} name="custid" label="Cus Id" />
             </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="availableBalance"
-                label="Tài khoản khả dụng"
-              />
-            </Grid>
-            <Grid item xs={4}>
+            {/* <Grid item xs={4}>
               <InputAutocomplete
                 control={control}
                 options={statusSelect}
                 name="synStatus"
                 label="Trạng thái"
               />
-            </Grid>
+            </Grid> */}
           </Grid>
           <div style={{ padding: '10px' }}></div>
           <Grid container justifyContent="flex-end" spacing={2}>

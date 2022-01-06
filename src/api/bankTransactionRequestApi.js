@@ -1,9 +1,9 @@
 import axiosClient from './axiosClient';
 
-const accountApi = {
+const bankTransactionRequestApi = {
   getAll: (params) => {
     const payload = new URLSearchParams(params);
-    const url = `pub/v1/account?${payload}`;
+    const url = `pub/v1/bank-transaction-request?${payload}`;
     return axiosClient.get(url);
   },
 
@@ -16,24 +16,24 @@ const accountApi = {
       payload += key + '=' + params[key];
     }
     // const payload = encodeURI(params);
-    const url = `pub/v1/account/search?${payload}`;
+    const url = `pub/v1/bank-transaction-request/search?${payload}`;
     return axiosClient.get(url, params);
   },
 
   add: (params) => {
-    const url = 'pub/v1/account/add';
+    const url = 'pub/v1/bank-transaction-request/add';
     return axiosClient.post(url, params);
   },
 
   edit: (params, id) => {
-    const url = `pub/v1/account/${id}`;
+    const url = `pub/v1/bank-transaction-request/${id}`;
     return axiosClient.put(url, params);
   },
 
   delete: (params) => {
-    const url = `pub/v1/account/${params._id}`;
+    const url = `pub/v1/bank-transaction-request/${params._id}`;
     return axiosClient.delete(url, params);
   }
 };
 
-export default accountApi;
+export default bankTransactionRequestApi;

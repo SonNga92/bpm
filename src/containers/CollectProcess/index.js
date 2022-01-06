@@ -16,8 +16,10 @@ import {
 import InputField from '../../components/InputField';
 import { GlobalWrapper } from '../../styles/styles';
 import useTable from './components/hooks/useTable';
+import InputDatePicker from '../../components/InputDatePicker';
+import InputCurrency from '../../components/InputCurrency';
 
-const BankInfo = () => {
+const CollectProcess = () => {
   const [open, setOpen] = useState(false);
   const [formType, setFormType] = useState('');
   const [editId, setEditId] = useState('');
@@ -27,15 +29,21 @@ const BankInfo = () => {
     useTable();
 
   const defaultValues = {
-    bank_id: '',
-    bankName: '',
-    shortName: '',
-    vpbBankId: '',
-    citadBankId: '',
-    cityName: '',
-    cityShortname: '',
-    bankFullname: '',
-    bankShortname: ''
+    serviceCode: '',
+    kssAccountNo: '',
+    amount: '',
+    notifyId: '',
+    ft_id: '',
+    analysisResult: '',
+    processResult: '',
+    processDate: Date(new Date()),
+    flexResponse: '',
+    flexResponseDetail: '',
+    targetSystem: '',
+    retryCount: '',
+    bankTransDate: Date(new Date()),
+    bookingDate: Date(new Date()),
+    switchCode: ''
   };
 
   const { control, handleSubmit, reset, setValue } = useForm({
@@ -44,24 +52,32 @@ const BankInfo = () => {
     defaultValues: defaultValues,
     resolver: yupResolver(
       Yup.object({
-        bank_id: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng')
+        serviceCode: Yup.string().trim().required('Trường bắt buộc'),
+        kssAccountNo: Yup.string().trim().required('Trường bắt buộc'),
+        amount: Yup.string().trim().required('Trường bắt buộc'),
+        notifyId: Yup.string().trim().required('Trường bắt buộc'),
+        ftId: Yup.string().trim().required('Trường bắt buộc'),
+        analysisResult: Yup.string().trim().required('Trường bắt buộc'),
+        processResult: Yup.string().trim().required('Trường bắt buộc'),
+        processDate: Yup.date()
+          .nullable()
+          .typeError('Sai định dạng')
+          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại')
           .required('Trường bắt buộc'),
-        bankName: Yup.string().trim().required('Trường bắt buộc'),
-        shortName: Yup.string().required('Trường bắt buộc'),
-        vpbBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng')
+        flexResponse: Yup.string().trim().required('Trường bắt buộc'),
+        flexResponseDetail: Yup.string().trim().required('Trường bắt buộc'),
+        retryCount: Yup.string().trim().required('Trường bắt buộc'),
+        bankTransDate: Yup.date()
+          .nullable()
+          .typeError('Sai định dạng')
+          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại')
           .required('Trường bắt buộc'),
-        citadBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng')
+        bookingDate: Yup.date()
+          .nullable()
+          .typeError('Sai định dạng')
+          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại')
           .required('Trường bắt buộc'),
-        cityName: Yup.string().trim().required('Trường bắt buộc'),
-        cityShortname: Yup.string().trim().required('Trường bắt buộc'),
-        bankFullname: Yup.string().trim().required('Trường bắt buộc'),
-        bankShortname: Yup.string().trim().required('Trường bắt buộc')
+        switchCode: Yup.string().trim().required('Trường bắt buộc')
       })
     )
   });
@@ -83,15 +99,21 @@ const BankInfo = () => {
 
   const handleEdit = (values, view) => {
     if (values) {
-      setValue('bank_id', values.bank_id);
-      setValue('bankName', values.bankName);
-      setValue('shortName', values.shortName);
-      setValue('vpbBankId', values.vpbBankId);
-      setValue('citadBankId', values.citadBankId);
-      setValue('cityName', values.cityName);
-      setValue('cityShortname', values.cityShortname);
-      setValue('bankFullname', values.bankFullname);
-      setValue('bankShortname', values.bankShortname);
+      setValue('serviceCode', values.serviceCode);
+      setValue('kssAccountNo', values.kssAccountNo);
+      setValue('amount', values.amount);
+      setValue('notifyId', values.notifyId);
+      setValue('ftId', values.ftId);
+      setValue('analysisResult', values.analysisResult);
+      setValue('processResult', values.processResult);
+      setValue('processDate', values.processDate);
+      setValue('flexResponse', values.flexResponse);
+      setValue('flexResponseDetail', values.flexResponseDetail);
+      setValue('targetSystem', values.targetSystem);
+      setValue('retryCount', values.retryCount);
+      setValue('bankTransDate', values.bankTransDate);
+      setValue('bookingDate', values.bookingDate);
+      setValue('switchCode', values.switchCode);
       setEditId(values.id);
       handleOpen();
       setFormType('edit');
@@ -136,7 +158,7 @@ const BankInfo = () => {
         handleEdit={handleEdit}
         onDelete={onDelete}
         getTableData={getTableData}
-        handleAdd={handleAdd}
+        // handleAdd={handleAdd}
       />
 
       <Dialog open={open} onClose={onCloseForm} maxWidth="md" fullWidth>
@@ -157,73 +179,115 @@ const BankInfo = () => {
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="bank_id"
-                  label="Mã bank"
+                  name="serviceCode"
+                  label="Nạp tiền cho dịch vụ"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="bankName"
-                  label="Tên ngân hàng"
+                  name="kssAccountNo"
+                  label="Tài khoản trên KSS"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputCurrency
+                  control={control}
+                  name="amount"
+                  label="Số tiền"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="shortName"
-                  label="Mã ngân hàng"
+                  name="notifyId"
+                  label="ID notification"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="vpbBankId"
-                  label="Mã vpb Bank"
+                  name="ftId"
+                  label="Số FT"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="citadBankId"
-                  label="citadBankId"
+                  name="analysisResult"
+                  label="Trạng thái phân tích"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="cityName"
-                  label="Tên thành phố"
+                  name="processResult"
+                  label="Trạng thái xử lý"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputDatePicker
+                  control={control}
+                  name="processDate"
+                  label="Thời gian xử lý xong"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="cityShortname"
-                  label="Mã thành phố"
+                  name="flexResponse"
+                  label="Phản hồi của flex"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="bankFullname"
-                  label="Tên ngân hàng đầy đủ"
+                  name="retryCount"
+                  label="Retry Count"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputDatePicker
+                  control={control}
+                  name="bankTransDate"
+                  label="Bank Trans Date"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputDatePicker
+                  control={control}
+                  name="bookingDate"
+                  label="Booking Date"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="bankShortname"
-                  label="Mã ngân hàng"
+                  name="switchCode"
+                  label="Switch Code"
                   disabled={disabledInput}
+                />
+              </Grid>
+
+              <Grid item xs={8}>
+                <InputField
+                  control={control}
+                  name="flexResponseDetail"
+                  label="Chi tiết flex"
+                  disabled={disabledInput}
+                  multiline={true}
                 />
               </Grid>
             </Grid>
@@ -259,4 +323,4 @@ const BankInfo = () => {
   );
 };
 
-export default BankInfo;
+export default CollectProcess;

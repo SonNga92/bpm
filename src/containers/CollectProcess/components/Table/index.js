@@ -20,76 +20,134 @@ const Table = (props) => {
       }
     },
     {
-      field: 'bank_id',
-      title: 'Mã bank',
+      field: 'serviceCode',
+      title: 'Nạp tiền cho dịch vụ',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '80px',
+        minWidth: '80px'
       }
     },
     {
-      field: 'bankName',
-      title: 'Tên ngân hàng',
+      field: 'kssAccountNo',
+      title: 'Tài khoản trên KSS',
       cellStyle: {
-        width: '220px',
-        minWidth: '220px'
+        width: '120px',
+        minWidth: '120px'
       }
     },
     {
-      field: 'shortName',
-      title: 'Mã ngân hàng',
+      field: 'amount',
+      title: 'Số tiền',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
-      }
-    },
-    {
-      field: 'vpbBankId',
-      title: 'vpbBank Id',
-      cellStyle: {
-        width: '150px',
-        minWidth: '150px'
-      }
-    },
-    {
-      field: 'citadBankId',
-      title: 'citadBankId',
-      cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '120px',
+        minWidth: '120px'
+      },
+      type: 'currency',
+      currencySetting: {
+        locale: 'vi',
+        currencyCode: 'VND',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
       },
       align: 'right'
     },
     {
-      field: 'cityName',
-      title: 'Thành phố',
+      field: 'notifyId',
+      title: 'ID notification',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      },
+      align: 'right'
+    },
+    {
+      field: 'ftId',
+      title: 'Số FT',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      },
+      align: 'right'
+    },
+    {
+      field: 'analysisResult',
+      title: 'Trạng thái phân tích',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'processResult',
+      title: 'Trạng thái xử lý',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'processDate',
+      title: 'Thời gian xử lý xong',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'flexResponse',
+      title: 'Phản hồi của flex',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'flexResponseDetail',
+      title: 'Chi tiết flex',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'targetSystem',
+      title: 'Hệ thống',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'retryCount',
+      title: 'Retry Count',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      },
+      align: 'right'
+    },
+    {
+      field: 'bankTransDate',
+      title: 'Bank Trans Date',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankFullname',
-      title: 'bankFullname',
+      field: 'bookingDate',
+      title: 'Booking Date',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankShortname',
-      title: 'bankShortname',
+      field: 'switchCode',
+      title: 'Switch Code',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
-      }
-    },
-    {
-      field: 'createdAt',
-      title: 'Ngày tạo',
-      cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '120px',
+        minWidth: '120px'
       }
     }
   ]);
@@ -145,7 +203,7 @@ const Table = (props) => {
   return (
     <div style={{ maxWidth: '100%' }}>
       <MaterialTable
-        title="Danh mục ngân hàng"
+        title="Bảng kết quả xử lý bản tin từ bank. Cộng tiền flex."
         isLoading={loading}
         data={data}
         icons={tableIcons}
@@ -180,7 +238,7 @@ const Table = (props) => {
                     color="primary"
                     size="small"
                   >
-                    Thêm danh mục ngân hàng
+                    Thêm kết quả giao dịch chi hộ
                   </Button>
                 </div>
               )}

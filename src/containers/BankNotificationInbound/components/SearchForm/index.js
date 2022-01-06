@@ -5,7 +5,9 @@ import * as Yup from 'yup';
 import InputField from '../../../../components/InputField';
 import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { Wrapper } from '../../styles';
-import InputDatePicker from '../../../../components/InputDatePicker';
+import InputDatePicker from '../../../../components/InputCurrency';
+import InputCurrency from '../../../../components/InputCurrency';
+
 import { format, isDate } from 'date-fns';
 
 const SearchForm = (props) => {
@@ -13,17 +15,15 @@ const SearchForm = (props) => {
   const { pageIndex, pageSize, totalCount, data, loading } = tableData;
 
   const defaultValues = {
-    bank_id: '',
-    bankName: '',
-    shortName: '',
-    vpbBankId: '',
-    citadBankId: '',
-    cityName: '',
-    cityShortname: '',
-    bankFullname: '',
-    bankShortname: '',
-    dateFrom: null,
-    dateTo: null
+    accountNo: '',
+    vanAccountNo: '',
+    payerName: '',
+    ftId: '',
+    reamark: '',
+    reamark: '',
+    state: '',
+    errorcode: '',
+    switchCode: ''
   };
 
   const { control, handleSubmit, reset } = useForm({
@@ -102,76 +102,42 @@ const SearchForm = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <InputField control={control} name="bank_id" label="Mã bank" />
-            </Grid>
-            <Grid item xs={4}>
               <InputField
                 control={control}
-                name="bankName"
-                label="Tên ngân hàng"
+                name="accountNo"
+                label="Tài khoản master account - VPB"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="shortName"
+                name="vanAccountNo"
+                label="Số tài khoản VAN"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <InputField control={control} name="ftId" label="Số FT" />
+            </Grid>
+            <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="reamark"
+                label="Diễn giải"
+                multiline={true}
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="errorcode"
+                label="Mô tả cho state của giao dịch"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="switchCode"
                 label="Mã ngân hàng"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="vpbBankId"
-                label="Mã vpb Bank"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="citadBankId"
-                label="citadBankId"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="cityName"
-                label="Tên thành phố"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="cityShortname"
-                label="Mã thành phố"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="bankFullname"
-                label="Tên ngân hàng đầy đủ"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="bankShortname"
-                label="Mã ngân hàng"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputDatePicker
-                control={control}
-                name="dateFrom"
-                label="Từ ngày"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputDatePicker
-                control={control}
-                name="dateTo"
-                label="Đến ngày"
               />
             </Grid>
           </Grid>

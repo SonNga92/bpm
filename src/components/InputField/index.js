@@ -1,13 +1,22 @@
-import { TextField, withStyles } from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import { Controller } from 'react-hook-form';
 
 const InputField = (props) => {
-  const { control, name, label, disabled, ...restProps } = props;
+  const {
+    control,
+    name,
+    label,
+    disabled,
+    inputFieldProps,
+    multiline,
+    minRows,
+    maxRows,
+    ...restProps
+  } = props;
   return (
     <Controller
       name={name}
       control={control}
-      {...restProps}
       render={({
         field: { onBlur, onChange, ref, value },
         fieldState: { error }
@@ -25,6 +34,10 @@ const InputField = (props) => {
           error={!!error}
           helperText={error && error.message}
           fullWidth
+          multiline={multiline ? true : false}
+          minRows={1}
+          maxRows={8}
+          {...restProps}
         />
       )}
     />

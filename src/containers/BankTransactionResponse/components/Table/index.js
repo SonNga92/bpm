@@ -20,76 +20,124 @@ const Table = (props) => {
       }
     },
     {
-      field: 'bank_id',
-      title: 'Mã bank',
+      field: 'id',
+      title: 'Id',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '80px',
+        minWidth: '80px'
       }
     },
     {
-      field: 'bankName',
-      title: 'Tên ngân hàng',
+      field: 'refNo',
+      title: 'refNo',
       cellStyle: {
-        width: '220px',
-        minWidth: '220px'
+        width: '120px',
+        minWidth: '120px'
       }
     },
     {
-      field: 'shortName',
-      title: 'Mã ngân hàng',
+      field: 'ftId',
+      title: 'ftId',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '120px',
+        minWidth: '120px'
       }
     },
     {
-      field: 'vpbBankId',
-      title: 'vpbBank Id',
+      field: 'uuid',
+      title: 'uuid request',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '120px',
+        minWidth: '120px'
       }
     },
     {
-      field: 'citadBankId',
-      title: 'citadBankId',
+      field: 'transferResult',
+      title: 'Kết quả giao dịch',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '100px',
+        minWidth: '100px'
+      }
+    },
+    {
+      field: 'requestDate',
+      title: 'Thời gian gửi bản tin đi',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
       },
       align: 'right'
     },
     {
-      field: 'cityName',
-      title: 'Thành phố',
+      field: 'responseDate',
+      title: 'Thời gian client nhận được response',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'bankRequestDate',
+      title: 'Thời gian nhận từ hệ thống middleware của bank',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'bankTranferDate',
+      title: 'Thời gian giao dịch từ core banking',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'finalResult',
+      title: 'Trạng thái cuối cùng',
+      cellStyle: {
+        width: '100px',
+        minWidth: '100px'
+      }
+    },
+    {
+      field: 'lastResult',
+      title: 'Last Result',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankFullname',
-      title: 'bankFullname',
+      field: 'actionNo',
+      title: 'actionNo',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'txdate',
+      title: 'tx date',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankShortname',
-      title: 'bankShortname',
+      field: 'txnum',
+      title: 'tx num',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'createdAt',
-      title: 'Ngày tạo',
+      field: 'switchCode',
+      title: 'Switch Code',
       cellStyle: {
-        width: '150px',
-        minWidth: '150px'
+        width: '120px',
+        minWidth: '120px'
       }
     }
   ]);
@@ -145,7 +193,7 @@ const Table = (props) => {
   return (
     <div style={{ maxWidth: '100%' }}>
       <MaterialTable
-        title="Danh mục ngân hàng"
+        title="Kết quả giao dịch chi hộ"
         isLoading={loading}
         data={data}
         icons={tableIcons}
@@ -180,7 +228,7 @@ const Table = (props) => {
                     color="primary"
                     size="small"
                   >
-                    Thêm danh mục ngân hàng
+                    Thêm kết quả giao dịch chi hộ
                   </Button>
                 </div>
               )}

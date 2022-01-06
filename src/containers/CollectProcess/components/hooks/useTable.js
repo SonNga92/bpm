@@ -1,7 +1,6 @@
 import { useCallback, useState } from 'react';
 import { useSnackbar } from 'notistack';
-import accountApi from '../../../../api/accountApi';
-import bankInfoApi from '../../../../api/bankInfoApi';
+import collectProcessApi from '../../../../api/collectProcessApi';
 
 const useTable = () => {
   const { enqueueSnackbar, closeSnackbar } = useSnackbar();
@@ -30,10 +29,12 @@ const useTable = () => {
       });
       let response = {};
       searchValues
-        ? (response = await accountApi.search({ ...params, ...searchValues }))
-        : (response = await accountApi.getAll(params));
+        ? (response = await collectProcessApi.search({
+            ...params,
+            ...searchValues
+          }))
+        : (response = await collectProcessApi.getAll(params));
       const { data } = response;
-      console.log('response', response);
       let rows = [];
       if (data) {
         rows = data.data.map((record, index) => {
@@ -79,7 +80,7 @@ const useTable = () => {
   const onDelete = async (params) => {
     try {
       if (params._id) {
-        await accountApi.delete(params);
+        await collectProcessApi.delete(params);
       }
     } catch (error) {
       console.log('Failed to delete user', error);
@@ -90,7 +91,7 @@ const useTable = () => {
   const onAdd = async (params) => {
     try {
       if (params) {
-        accountApi.add(params);
+        collectProcessApi.add(params);
         setTimeout(() => getTableData(), 300);
       }
     } catch (error) {
@@ -101,7 +102,7 @@ const useTable = () => {
   const onEdit = async (params) => {
     try {
       if (params && editId) {
-        accountApi.edit(params, editId);
+        collectProcessApi.edit(params, editId);
         setTimeout(() => getTableData(), 300);
       }
     } catch (error) {

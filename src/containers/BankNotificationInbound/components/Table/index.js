@@ -20,65 +20,80 @@ const Table = (props) => {
       }
     },
     {
-      field: 'bank_id',
-      title: 'Mã bank',
+      field: 'id',
+      title: 'Id',
+      cellStyle: {
+        width: '100px',
+        minWidth: '100px'
+      }
+    },
+    {
+      field: 'accountNo',
+      title: 'Tài khoản master account - VPB',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'vanAccountNo',
+      title: 'Số tài khoản VAN',
+      cellStyle: {
+        width: '120px',
+        minWidth: '120px'
+      }
+    },
+    {
+      field: 'payerName',
+      title: 'Tên tài khoản VAN',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankName',
-      title: 'Tên ngân hàng',
-      cellStyle: {
-        width: '220px',
-        minWidth: '220px'
-      }
-    },
-    {
-      field: 'shortName',
-      title: 'Mã ngân hàng',
-      cellStyle: {
-        width: '150px',
-        minWidth: '150px'
-      }
-    },
-    {
-      field: 'vpbBankId',
-      title: 'vpbBank Id',
-      cellStyle: {
-        width: '150px',
-        minWidth: '150px'
-      }
-    },
-    {
-      field: 'citadBankId',
-      title: 'citadBankId',
+      field: 'amount',
+      title: 'Số tiền ghi nợ/ có',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       },
+      type: 'currency',
+      currencySetting: {
+        locale: 'vi',
+        currencyCode: 'VND',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 2
+      },
       align: 'right'
     },
     {
-      field: 'cityName',
-      title: 'Thành phố',
+      field: 'transactionDate',
+      title: 'Transaction Date',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankFullname',
-      title: 'bankFullname',
+      field: 'bookingDate',
+      title: 'Thời gian ghi nhận giao dịch',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
       }
     },
     {
-      field: 'bankShortname',
-      title: 'bankShortname',
+      field: 'ftId',
+      title: 'Số FT',
+      cellStyle: {
+        width: '100px',
+        minWidth: '100px'
+      }
+    },
+    {
+      field: 'reamark',
+      title: 'Diễn giải',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
@@ -86,7 +101,31 @@ const Table = (props) => {
     },
     {
       field: 'createdAt',
-      title: 'Ngày tạo',
+      title: 'Thời gian client nhận YC',
+      cellStyle: {
+        width: '150px',
+        minWidth: '150px'
+      }
+    },
+    {
+      field: 'state',
+      title: 'state',
+      cellStyle: {
+        width: '150px',
+        minWidth: '150px'
+      }
+    },
+    {
+      field: 'errorcode',
+      title: 'Mô tả cho state của giao dịch',
+      cellStyle: {
+        width: '150px',
+        minWidth: '150px'
+      }
+    },
+    {
+      field: 'switchCode',
+      title: 'Switch Code',
       cellStyle: {
         width: '150px',
         minWidth: '150px'
@@ -145,7 +184,7 @@ const Table = (props) => {
   return (
     <div style={{ maxWidth: '100%' }}>
       <MaterialTable
-        title="Danh mục ngân hàng"
+        title="Bảng notification từ bank đẩy về KSS"
         isLoading={loading}
         data={data}
         icons={tableIcons}
@@ -180,7 +219,7 @@ const Table = (props) => {
                     color="primary"
                     size="small"
                   >
-                    Thêm danh mục ngân hàng
+                    Thêm notification
                   </Button>
                 </div>
               )}

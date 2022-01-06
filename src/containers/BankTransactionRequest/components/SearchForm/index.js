@@ -13,15 +13,15 @@ const SearchForm = (props) => {
   const { pageIndex, pageSize, totalCount, data, loading } = tableData;
 
   const defaultValues = {
-    bank_id: '',
-    bankName: '',
-    shortName: '',
-    vpbBankId: '',
-    citadBankId: '',
-    cityName: '',
-    cityShortname: '',
-    bankFullname: '',
-    bankShortname: '',
+    uuid: '',
+    refNo: '',
+    sourceNo: '',
+    targetNo: '',
+    remark: '',
+    bankCode: '',
+    benName: '',
+    actor: '',
+    accountNo: '',
     dateFrom: null,
     dateTo: null
   };
@@ -32,21 +32,15 @@ const SearchForm = (props) => {
     defaultValues: defaultValues,
     resolver: yupResolver(
       Yup.object({
-        bank_id: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng'),
-        bankName: Yup.string().trim(),
-        shortName: Yup.string(),
-        vpbBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng'),
-        citadBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng'),
-        cityName: Yup.string().trim(),
-        cityShortname: Yup.string().trim(),
-        bankFullname: Yup.string().trim(),
-        bankShortname: Yup.string().trim(),
+        uuid: Yup.string().trim(),
+        refNo: Yup.string().trim(),
+        sourceNo: Yup.string(),
+        targetNo: Yup.string(),
+        remark: Yup.string(),
+        bankCode: Yup.string().trim(),
+        benName: Yup.string().trim(),
+        actor: Yup.string().trim(),
+        accountNo: Yup.string().trim(),
         dateFrom: Yup.date()
           .nullable()
           // .typeError('Sai định dạng')
@@ -102,62 +96,67 @@ const SearchForm = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <InputField control={control} name="bank_id" label="Mã bank" />
-            </Grid>
-            <Grid item xs={4}>
               <InputField
                 control={control}
-                name="bankName"
-                label="Tên ngân hàng"
+                name="uuid"
+                label="Id của request gửi lên Bank"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="shortName"
-                label="Mã ngân hàng"
+                name="refNo"
+                label="Mã tham chiếu từ kss -> bank"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="vpbBankId"
-                label="Mã vpb Bank"
+                name="sourceNo"
+                label="Tài khoản nguồn"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="citadBankId"
-                label="citadBankId"
+                name="targetNo"
+                label="Tài khoản đích nhận"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="cityName"
-                label="Tên thành phố"
+                name="remark"
+                label="Nội dung chuyển khoản"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="cityShortname"
-                label="Mã thành phố"
+                name="bankCode"
+                label="Mã nhân hàng thụ hưởng"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="bankFullname"
-                label="Tên ngân hàng đầy đủ"
+                name="benName"
+                label="Tên chủ tài khoản"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="bankShortname"
-                label="Mã ngân hàng"
+                name="actor"
+                label="username thực hiện giao dịch"
+              />
+            </Grid>
+
+            <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="accountNo"
+                label="Tài khoản"
               />
             </Grid>
             <Grid item xs={4}>

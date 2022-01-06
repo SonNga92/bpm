@@ -14,10 +14,12 @@ import {
   Grid
 } from '@material-ui/core';
 import InputField from '../../components/InputField';
+import InputDatePicker from '../../components/InputDatePicker';
+import InputCurrency from '../../components/InputCurrency';
 import { GlobalWrapper } from '../../styles/styles';
 import useTable from './components/hooks/useTable';
 
-const BankInfo = () => {
+const BankNotificationInbound = () => {
   const [open, setOpen] = useState(false);
   const [formType, setFormType] = useState('');
   const [editId, setEditId] = useState('');
@@ -27,15 +29,20 @@ const BankInfo = () => {
     useTable();
 
   const defaultValues = {
-    bank_id: '',
-    bankName: '',
-    shortName: '',
-    vpbBankId: '',
-    citadBankId: '',
-    cityName: '',
-    cityShortname: '',
-    bankFullname: '',
-    bankShortname: ''
+    id: '',
+    accountNo: '',
+    vanAccountNo: '',
+    payerName: '',
+    amount: '',
+    transactionDate: null,
+    bookingDate: null,
+    ftId: '',
+    reamark: '',
+    reamark: '',
+    createdAt: null,
+    state: '',
+    errorcode: '',
+    switchCode: ''
   };
 
   const { control, handleSubmit, reset, setValue } = useForm({
@@ -44,24 +51,28 @@ const BankInfo = () => {
     defaultValues: defaultValues,
     resolver: yupResolver(
       Yup.object({
-        bank_id: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng')
-          .required('Trường bắt buộc'),
-        bankName: Yup.string().trim().required('Trường bắt buộc'),
-        shortName: Yup.string().required('Trường bắt buộc'),
-        vpbBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng')
-          .required('Trường bắt buộc'),
-        citadBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng')
-          .required('Trường bắt buộc'),
-        cityName: Yup.string().trim().required('Trường bắt buộc'),
-        cityShortname: Yup.string().trim().required('Trường bắt buộc'),
-        bankFullname: Yup.string().trim().required('Trường bắt buộc'),
-        bankShortname: Yup.string().trim().required('Trường bắt buộc')
+        accountNo: Yup.string().trim().required('Trường bắt buộc'),
+        vanAccountNo: Yup.string().trim().required('Trường bắt buộc'),
+        payerName: Yup.string().trim().required('Trường bắt buộc'),
+        amount: Yup.string().trim().required('Trường bắt buộc'),
+        transactionDate: Yup.date()
+          .nullable()
+          // .typeError('Sai định dạng')
+          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại'),
+        bookingDate: Yup.date()
+          .nullable()
+          // .typeError('Sai định dạng')
+          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại'),
+        ftId: Yup.string().trim().required('Trường bắt buộc'),
+        reamark: Yup.string().trim().required('Trường bắt buộc'),
+        reamark: Yup.string().trim().required('Trường bắt buộc'),
+        createdAt: Yup.date()
+          .nullable()
+          // .typeError('Sai định dạng')
+          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại'),
+        state: Yup.string().trim().required('Trường bắt buộc'),
+        errorcode: Yup.string().trim().required('Trường bắt buộc'),
+        switchCode: Yup.string().trim().required('Trường bắt buộc')
       })
     )
   });
@@ -83,15 +94,21 @@ const BankInfo = () => {
 
   const handleEdit = (values, view) => {
     if (values) {
-      setValue('bank_id', values.bank_id);
-      setValue('bankName', values.bankName);
-      setValue('shortName', values.shortName);
-      setValue('vpbBankId', values.vpbBankId);
-      setValue('citadBankId', values.citadBankId);
-      setValue('cityName', values.cityName);
-      setValue('cityShortname', values.cityShortname);
-      setValue('bankFullname', values.bankFullname);
-      setValue('bankShortname', values.bankShortname);
+      setValue('id', values.id);
+      setValue('accountNo', values.accountNo);
+      setValue('vanAccountNo', values.vanAccountNo);
+      setValue('payerName', values.payerName);
+      setValue('amount', values.amount);
+      setValue('transactionDate', values.transactionDate);
+      setValue('bookingBate', values.bookingBate);
+      setValue('bookingBate', values.bookingBate);
+      setValue('ftId', values.ftId);
+      setValue('reamark', values.reamark);
+      setValue('reamark', values.reamark);
+      setValue('createdAt', values.createdAt);
+      setValue('state', values.state);
+      setValue('errorcode', values.errorcode);
+      setValue('switchCode', values.switchCode);
       setEditId(values.id);
       handleOpen();
       setFormType('edit');
@@ -136,17 +153,27 @@ const BankInfo = () => {
         handleEdit={handleEdit}
         onDelete={onDelete}
         getTableData={getTableData}
-        handleAdd={handleAdd}
+        // handleAdd={handleAdd}
       />
 
-      <Dialog open={open} onClose={onCloseForm} maxWidth="md" fullWidth>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          {formType === 'add' && <DialogTitle>Thêm ngân hàng</DialogTitle>}
+      <Dialog
+        open={open}
+        onClose={onCloseForm}
+        maxWidth="lg"
+        fullWidth
+        style={{ minHeight: '60%' }}
+      >
+        <form
+          onSubmit={handleSubmit(onSubmit)}
+          aria-labelledby="form-dialog-title"
+          style={{ margin: '0 50px' }}
+        >
+          {formType === 'add' && <DialogTitle>Thêm notification</DialogTitle>}
           {formType === 'edit' && (
-            <DialogTitle>Cập nhật thông tin ngân hàng</DialogTitle>
+            <DialogTitle>Cập nhật thông tin notification</DialogTitle>
           )}
           {formType === 'view' && (
-            <DialogTitle>Thông tin ngân hàng</DialogTitle>
+            <DialogTitle>Thông tin notification</DialogTitle>
           )}
 
           <Divider variant="middle" />
@@ -157,73 +184,99 @@ const BankInfo = () => {
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="bank_id"
-                  label="Mã bank"
+                  name="id"
+                  label="Id"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="bankName"
-                  label="Tên ngân hàng"
+                  name="accountNo"
+                  label="Tài khoản master account - VPB"
                   disabled={disabledInput}
                 />
               </Grid>
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="shortName"
+                  name="vanAccountNo"
+                  label="Số tài khoản VAN"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputCurrency
+                  control={control}
+                  name="amount"
+                  label="Số tiền ghi nợ/ có"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputDatePicker
+                  control={control}
+                  name="transactionDate"
+                  label="Transaction Date"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputDatePicker
+                  control={control}
+                  name="bookingDate"
+                  label="Thời gian ghi nhận giao dịch"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="ftId"
+                  label="Số FT"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputDatePicker
+                  control={control}
+                  name="createdAt"
+                  label="Thời gian client nhận YC"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="state"
+                  label="State"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="errorcode"
+                  label="Mô tả cho state của giao dịch"
+                  disabled={disabledInput}
+                />
+              </Grid>
+              <Grid item xs={4}>
+                <InputField
+                  control={control}
+                  name="Switch Code"
                   label="Mã ngân hàng"
                   disabled={disabledInput}
                 />
               </Grid>
+
               <Grid item xs={4}>
                 <InputField
                   control={control}
-                  name="vpbBankId"
-                  label="Mã vpb Bank"
+                  name="reamark"
+                  label="Diễn giải"
                   disabled={disabledInput}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <InputField
-                  control={control}
-                  name="citadBankId"
-                  label="citadBankId"
-                  disabled={disabledInput}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <InputField
-                  control={control}
-                  name="cityName"
-                  label="Tên thành phố"
-                  disabled={disabledInput}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <InputField
-                  control={control}
-                  name="cityShortname"
-                  label="Mã thành phố"
-                  disabled={disabledInput}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <InputField
-                  control={control}
-                  name="bankFullname"
-                  label="Tên ngân hàng đầy đủ"
-                  disabled={disabledInput}
-                />
-              </Grid>
-              <Grid item xs={4}>
-                <InputField
-                  control={control}
-                  name="bankShortname"
-                  label="Mã ngân hàng"
-                  disabled={disabledInput}
+                  multiline={true}
                 />
               </Grid>
             </Grid>
@@ -259,4 +312,4 @@ const BankInfo = () => {
   );
 };
 
-export default BankInfo;
+export default BankNotificationInbound;

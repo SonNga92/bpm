@@ -40,6 +40,11 @@ const theme = createTheme({
       input: {
         color: 'rgba(0, 0, 0, 0.87)'
       }
+    },
+    MuiDialog: {
+      paper: {
+        overflowY: 'unset'
+      }
     }
   },
   palette: {

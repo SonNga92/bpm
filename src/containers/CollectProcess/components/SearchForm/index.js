@@ -7,23 +7,22 @@ import { Button, Divider, Grid, Paper, Typography } from '@material-ui/core';
 import { Wrapper } from '../../styles';
 import InputDatePicker from '../../../../components/InputDatePicker';
 import { format, isDate } from 'date-fns';
+import InputCurrency from '../../../../components/InputCurrency';
 
 const SearchForm = (props) => {
   const { getTableData, onSearch, tableData } = props;
   const { pageIndex, pageSize, totalCount, data, loading } = tableData;
 
   const defaultValues = {
-    bank_id: '',
-    bankName: '',
-    shortName: '',
-    vpbBankId: '',
-    citadBankId: '',
-    cityName: '',
-    cityShortname: '',
-    bankFullname: '',
-    bankShortname: '',
-    dateFrom: null,
-    dateTo: null
+    serviceCode: '',
+    kssAccountNo: '',
+    ftId: '',
+    analysisResult: '',
+    processResult: '',
+    flexResponse: '',
+    flexResponseDetail: '',
+    retryCount: '',
+    switchCode: ''
   };
 
   const { control, handleSubmit, reset } = useForm({
@@ -32,34 +31,15 @@ const SearchForm = (props) => {
     defaultValues: defaultValues,
     resolver: yupResolver(
       Yup.object({
-        bank_id: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng'),
-        bankName: Yup.string().trim(),
-        shortName: Yup.string(),
-        vpbBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng'),
-        citadBankId: Yup.string()
-          .trim()
-          .matches(/^[0-9]*$/, 'Sai định dạng'),
-        cityName: Yup.string().trim(),
-        cityShortname: Yup.string().trim(),
-        bankFullname: Yup.string().trim(),
-        bankShortname: Yup.string().trim(),
-        dateFrom: Yup.date()
-          .nullable()
-          // .typeError('Sai định dạng')
-          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại'),
-        dateTo: Yup.date()
-          .nullable()
-          // .typeError('Sai định dạng')
-          .max(Date(new Date()), 'Ngày nhập không lớn hơn ngày hiện tại')
-        // .when(
-        //   'dateFrom',
-        //   (dateFrom) =>
-        //     dateFrom && Yup.min(dateFrom, 'Đến ngày không nhỏ hơn từ ngày')
-        // )
+        serviceCode: Yup.string().trim(),
+        kssAccountNo: Yup.string().trim(),
+        ftId: Yup.string().trim(),
+        analysisResult: Yup.string().trim(),
+        processResult: Yup.string().trim(),
+        flexResponse: Yup.string().trim(),
+        flexResponseDetail: Yup.string().trim(),
+        retryCount: Yup.string().trim(),
+        switchCode: Yup.string().trim()
       })
     )
   });
@@ -102,76 +82,91 @@ const SearchForm = (props) => {
         <form onSubmit={handleSubmit(onSubmit)}>
           <Grid container spacing={2}>
             <Grid item xs={4}>
-              <InputField control={control} name="bank_id" label="Mã bank" />
-            </Grid>
-            <Grid item xs={4}>
               <InputField
                 control={control}
-                name="bankName"
-                label="Tên ngân hàng"
+                name="serviceCode"
+                label="Nạp tiền cho dịch vụ"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="shortName"
-                label="Mã ngân hàng"
+                name="kssAccountNo"
+                label="Tài khoản trên KSS"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="vpbBankId"
-                label="Mã vpb Bank"
+                name="notifyId"
+                label="ID notification"
+              />
+            </Grid>
+            <Grid item xs={4}>
+              <InputField control={control} name="ftId" label="Số FT" />
+            </Grid>
+            {/* <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="analysisResult"
+                label="Trạng thái phân tích"
+              />
+            </Grid> */}
+            {/* <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="processResult"
+                label="Trạng thái xử lý"
+              />
+            </Grid> */}
+            {/* <Grid item xs={4}>
+              <InputDatePicker
+                control={control}
+                name="processDate"
+                label="Thời gian xử lý xong"
+              />
+            </Grid> */}
+            <Grid item xs={4}>
+              <InputField
+                control={control}
+                name="flexResponse"
+                label="Phản hồi của flex"
               />
             </Grid>
             <Grid item xs={4}>
               <InputField
                 control={control}
-                name="citadBankId"
-                label="citadBankId"
+                name="flexResponseDetail"
+                label="Chi tiết flex"
               />
             </Grid>
-            <Grid item xs={4}>
+            {/* <Grid item xs={4}>
               <InputField
                 control={control}
-                name="cityName"
-                label="Tên thành phố"
+                name="retryCount"
+                label="Retry Count"
               />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
+            </Grid> */}
+            {/* <Grid item xs={4}>
+              <InputDatePicker
                 control={control}
-                name="cityShortname"
-                label="Mã thành phố"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="bankFullname"
-                label="Tên ngân hàng đầy đủ"
-              />
-            </Grid>
-            <Grid item xs={4}>
-              <InputField
-                control={control}
-                name="bankShortname"
-                label="Mã ngân hàng"
+                name="bankTransDate"
+                label="Bank Trans Date"
               />
             </Grid>
             <Grid item xs={4}>
               <InputDatePicker
                 control={control}
-                name="dateFrom"
-                label="Từ ngày"
+                name="bookingDate"
+                label="Booking Date"
               />
-            </Grid>
+            </Grid> */}
+
             <Grid item xs={4}>
-              <InputDatePicker
+              <InputField
                 control={control}
-                name="dateTo"
-                label="Đến ngày"
+                name="switchCode"
+                label="Switch Code"
               />
             </Grid>
           </Grid>

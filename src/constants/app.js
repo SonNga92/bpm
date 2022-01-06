@@ -35,21 +35,52 @@ export const MENU_ITEMS = [
     hasNestedMenu: false,
     icon: Assessment
   },
+
   {
     id: 5,
+    displayText: 'Bank Transaction Request',
+    path: '/bank-transaction-request',
+    hasNestedMenu: false,
+    icon: Assessment
+  },
+
+  {
+    id: 6,
+    displayText: 'Bank Transaction Response',
+    path: '/bank-transaction-response',
+    hasNestedMenu: false,
+    icon: Assessment
+  },
+
+  {
+    id: 7,
+    displayText: 'Collect Process',
+    path: '/collect-process',
+    hasNestedMenu: false,
+    icon: Assessment
+  },
+  {
+    id: 8,
+    displayText: 'Bank Notification Inbound',
+    path: '/bank-notification-inbound',
+    hasNestedMenu: false,
+    icon: Assessment
+  },
+  {
+    id: 9,
     displayText: 'Báo Cáo',
     path: '/',
     hasNestedMenu: true,
     icon: Settings,
     nestedMenu: [
       {
-        id: 5.1,
+        id: 9.1,
         displayText: 'Báo Cáo 1',
         icon: Settings,
         path: '/'
       },
       {
-        id: 5.2,
+        id: 9.2,
         displayText: 'Báo Cáo 1',
         icon: Settings,
         path: '/'

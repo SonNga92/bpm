@@ -16,12 +16,7 @@ const Header = (props) => {
         })}
       >
         <Toolbar>
-          <IconButton
-            color="inherit"
-            edge="start"
-            onClick={() => handleOpen()}
-            className={classes.menuIcon}
-          >
+          <IconButton color="inherit" edge="start" onClick={() => handleOpen()}>
             <Menu />
           </IconButton>
         </Toolbar>

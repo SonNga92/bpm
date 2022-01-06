@@ -1,16 +1,16 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect } from 'react';
 import Table from './components/Table';
 import SearchForm from './components/SearchForm';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { useForm } from 'react-hook-form';
 import * as Yup from 'yup';
-import cloneDeep from 'lodash/cloneDeep';
 import {
   Button,
   Dialog,
   DialogActions,
   DialogContent,
   DialogTitle,
+  Divider,
   Grid
 } from '@material-ui/core';
 import InputField from '../../components/InputField';
@@ -39,16 +39,8 @@ const Account = () => {
   const [editId, setEditId] = useState('');
   const [disabledInput, setDisabledInput] = useState(false);
 
-  const {
-    tableData,
-    getTableData,
-    onSearch,
-    onPageChange,
-    onPageSizeChange,
-    onDelete,
-    onAdd,
-    onEdit
-  } = useTable();
+  const { tableData, getTableData, onSearch, onDelete, onAdd, onEdit } =
+    useTable();
 
   const defaultValues = {
     fullname: '',
@@ -88,6 +80,7 @@ const Account = () => {
   const handleAdd = () => {
     handleOpen();
     setFormType('add');
+    setDisabledInput(false);
   };
 
   const handleEdit = (values, view) => {
@@ -112,22 +105,29 @@ const Account = () => {
 
   const onCloseForm = () => {
     handleClose();
-    reset(cloneDeep(defaultValues));
+    reset(defaultValues);
   };
 
   const onSubmit = (values, e) => {
     if (formType === 'add') {
-      onAdd(values);
+      // onAdd(values);
+      console.log('add', values);
     }
     if (formType === 'edit') {
-      onEdit(values);
+      // onEdit(values);
+      console.log('edit', values);
     }
     onCloseForm();
   };
 
   return (
     <GlobalWrapper>
-      <SearchForm statusSelect={statusSelect} onSearch={onSearch} />
+      <SearchForm
+        getTableData={getTableData}
+        onSearch={onSearch}
+        statusSelect={statusSelect}
+        tableData={tableData}
+      />
 
       <div style={{ padding: '10px' }}></div>
 
@@ -136,7 +136,7 @@ const Account = () => {
         handleEdit={handleEdit}
         onDelete={onDelete}
         getTableData={getTableData}
-        handleAdd={handleAdd}
+        // handleAdd={handleAdd}
       />
 
       <Dialog open={open} onClose={onCloseForm} maxWidth="md" fullWidth>
@@ -148,6 +148,9 @@ const Account = () => {
           {formType === 'view' && (
             <DialogTitle>Thông tin tài khoản</DialogTitle>
           )}
+
+          <Divider variant="middle" />
+          <div style={{ padding: '10px' }} />
 
           <DialogContent>
             <Grid container spacing={3}>
@@ -203,12 +206,29 @@ const Account = () => {
             </Grid>
           </DialogContent>
           <DialogActions>
-            <Button onClick={onCloseForm} variant="outlined">
-              Close
-            </Button>
-            <Button variant="contained" type="submit" color="primary">
-              Submit
-            </Button>
+            <Grid container justifyContent="flex-end" spacing={2}>
+              <Grid item xs={2}>
+                <Button
+                  onClick={onCloseForm}
+                  size="small"
+                  variant="outlined"
+                  fullWidth
+                >
+                  Close
+                </Button>
+              </Grid>
+              <Grid item xs={2}>
+                <Button
+                  size="small"
+                  variant="contained"
+                  type="submit"
+                  color="primary"
+                  fullWidth
+                >
+                  Submit
+                </Button>
+              </Grid>
+            </Grid>
           </DialogActions>
         </form>
       </Dialog>
