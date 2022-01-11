@@ -15,13 +15,13 @@ export const MENU_ITEMS = [
     hasNestedMenu: false,
     icon: Home
   },
-  {
-    id: 2,
-    displayText: 'Dashboard',
-    path: '/dashboard',
-    hasNestedMenu: false,
-    icon: Dashboard
-  },
+  // {
+  //   id: 2,
+  //   displayText: 'Dashboard',
+  //   path: '/dashboard',
+  //   hasNestedMenu: false,
+  //   icon: Dashboard
+  // },
   {
     id: 3,
     displayText: 'Account',
@@ -66,33 +66,33 @@ export const MENU_ITEMS = [
     path: '/bank-notification-inbound',
     hasNestedMenu: false,
     icon: Assessment
-  },
-  {
-    id: 9,
-    displayText: 'Báo Cáo',
-    path: '/',
-    hasNestedMenu: true,
-    icon: Settings,
-    nestedMenu: [
-      {
-        id: 9.1,
-        displayText: 'Báo Cáo 1',
-        icon: Settings,
-        path: '/'
-      },
-      {
-        id: 9.2,
-        displayText: 'Báo Cáo 1',
-        icon: Settings,
-        path: '/'
-      }
-    ]
-  },
-  {
-    id: 10,
-    displayText: 'Task List',
-    path: '/task-list',
-    hasNestedMenu: false,
-    icon: Assignment
   }
+  // {
+  //   id: 9,
+  //   displayText: 'Báo Cáo',
+  //   path: '/',
+  //   hasNestedMenu: true,
+  //   icon: Settings,
+  //   nestedMenu: [
+  //     {
+  //       id: 9.1,
+  //       displayText: 'Báo Cáo 1',
+  //       icon: Settings,
+  //       path: '/'
+  //     },
+  //     {
+  //       id: 9.2,
+  //       displayText: 'Báo Cáo 1',
+  //       icon: Settings,
+  //       path: '/'
+  //     }
+  //   ]
+  // },
+  // {
+  //   id: 10,
+  //   displayText: 'Task List',
+  //   path: '/task-list',
+  //   hasNestedMenu: false,
+  //   icon: Assignment
+  // }
 ];
